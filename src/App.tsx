@@ -1,11 +1,28 @@
 import React from 'react';
-import firebase from 'firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ResponsiveDrawer from './components/ResponsiveDrawer';
+import { Home } from './components/Home';
+import { Exercises } from './components/Exercises';
+import { Plans } from './components/Plans';
 
 function App() {
   return (
-    <div className="App">
-     my app
+    <div className='App'>
+      <Router>
+        <ResponsiveDrawer>
+          <Switch>
+            <Route path='/plans'>
+              <Plans />
+            </Route>
+            <Route path='/exercises'>
+              <Exercises />
+            </Route>
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
+        </ResponsiveDrawer>
+      </Router>
     </div>
   );
 }
