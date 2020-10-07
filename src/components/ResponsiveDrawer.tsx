@@ -92,6 +92,10 @@ export default function ResponsiveDrawer(props: any) {
     setMobileOpen(!mobileOpen);
   };
 
+  const closeDrawer = () => {
+    setMobileOpen(false);
+  };
+
   const navButtons = [
       { primary: 'Home', icon: <HomeIcon />, to: '/' },
       { primary: 'Plans', icon: <DateRangeIcon />, to: '/plans' },
@@ -102,12 +106,8 @@ export default function ResponsiveDrawer(props: any) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
+      <List onClick={closeDrawer}>
         {navButtons.map((item, index) => (
-          // <ListItem button key={item.primary}>
-          //   <ListItemIcon>{item.icon}</ListItemIcon>
-          //   <ListItemText primary={item.primary} />
-          // </ListItem>
           <ListItemLink to={item.to} primary={item.primary} icon={item.icon} />
         ))}
       </List>
