@@ -4,6 +4,7 @@ import ResponsiveDrawer from './components/ResponsiveDrawer';
 import { Home } from './components/Home';
 import { Exercises } from './components/Exercises';
 import { Plans } from './components/Plans';
+import { Login } from './components/Login';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
             </Route>
             <Route path='/exercises'>
               <Exercises />
+            </Route>
+            <Route path='/login' >
+              <Login />
             </Route>
             <Route path='/'>
               <Home />

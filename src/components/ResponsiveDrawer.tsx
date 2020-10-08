@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -51,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+    },
+    login: {
+      marginLeft: 'auto',
     },
   }),
 );
@@ -108,7 +112,7 @@ export default function ResponsiveDrawer(props: any) {
       <Divider />
       <List onClick={closeDrawer}>
         {navButtons.map((item, index) => (
-          <ListItemLink to={item.to} primary={item.primary} icon={item.icon} />
+          <ListItemLink key={item.primary} to={item.to} primary={item.primary} icon={item.icon} />
         ))}
       </List>
     </div>
@@ -133,6 +137,9 @@ export default function ResponsiveDrawer(props: any) {
           <Typography variant="h6" noWrap>
             Strength Tracker
           </Typography>
+          <div className={classes.login}>
+            <Button color="inherit" component={RouterLink} to='/login'>Login</Button>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
