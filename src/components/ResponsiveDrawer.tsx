@@ -138,7 +138,7 @@ export default function ResponsiveDrawer(props: any) {
             Strength Tracker
           </Typography>
           <div className={classes.login}>
-            <Button color="inherit" component={RouterLink} to='/login'>Login</Button>
+            <Button color="inherit" component={RouterLink} to='/signin'>Sign In</Button>
           </div>
         </Toolbar>
       </AppBar>
