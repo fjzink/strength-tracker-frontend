@@ -4,7 +4,8 @@ import ResponsiveDrawer from './components/ResponsiveDrawer';
 import { Home } from './components/Home';
 import { Exercises } from './components/Exercises';
 import { Plans } from './components/Plans';
-import { Login } from './components/Login';
+import { SignIn } from './components/SignIn';
+import { SignUp } from './components/SignUp';
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
             <Route path='/exercises'>
               <Exercises />
             </Route>
-            <Route path='/login' >
-              <Login />
+            <Route path='/signin' >
+              <SignIn />
+            </Route>
+            <Route path='/signup'>
+              <SignUp />
             </Route>
             <Route path='/'>
               <Home />
