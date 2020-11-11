@@ -1,26 +1,21 @@
-import {
-    SET_EMAIL,
-    SET_PASSWORD,
-    SET_FIRSTNAME,
-    SET_LASTNAME,
-} from './actionTypes';
+import { SET_EMAIL, SET_PASSWORD, SET_FIRSTNAME, SET_LASTNAME } from './actionTypes';
 
 export const setEmail = (email: string) => ({
     type: SET_EMAIL,
-    payload: { email }
+    payload: { email },
 });
 
 export const setPassword = (password: string) => ({
     type: SET_PASSWORD,
-    payload: { password }
+    payload: { password },
 });
 
 export const setFirstName = (firstName: string) => ({
     type: SET_FIRSTNAME,
-    payload: { firstName }
+    payload: { firstName },
 });
 
 export const setLastName = (lastName: string) => ({
     type: SET_LASTNAME,
-    payload: { lastName }
+    payload: { lastName },
 });

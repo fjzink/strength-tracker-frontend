@@ -1,8 +1,8 @@
-import { SET_EMAIL, SET_PASSWORD} from '../actionTypes';
+import { SET_EMAIL, SET_PASSWORD } from '../actionTypes';
 
 const initialState = {
     email: '',
-    password: ''
+    password: '',
 };
 
 interface Action {
@@ -18,21 +18,21 @@ interface PasswordPayload {
     password: string;
 }
 
-export default function(state = initialState, action: Action) {
+export default function (state = initialState, action: Action) {
     switch (action.type) {
         case SET_EMAIL: {
             const { email } = action.payload;
             return {
                 ...state,
-                email
+                email,
             };
         }
         case SET_PASSWORD: {
             const { password } = action.payload;
             return {
                 ...state,
-                password
-            }
+                password,
+            };
         }
         default:
             return state;
