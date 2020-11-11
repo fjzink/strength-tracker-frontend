@@ -11,8 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { setEmail, setPassword, setFirstName, setLastName } from '../redux/actions';
+import { apiClient } from '../config/axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,6 +48,7 @@ interface RootState {
 const SignUp = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const firstName = useSelector((state: RootState) => state.signup.firstName);
     const lastName = useSelector((state: RootState) => state.signup.lastName);
@@ -68,6 +71,21 @@ const SignUp = () => {
         dispatch(setPassword(event.target.value));
     };
 
+    const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const user = { email, password, firstName, lastName };
+        try {
+            const response = await apiClient.post('/api/auth/signup', user);
+            const { message, error } = response.data;
+            console.log(response.data);
+            if (error) {
+                console.log(error);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -78,7 +96,7 @@ const SignUp = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleSignup}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
