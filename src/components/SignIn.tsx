@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,64 +7,65 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiClient } from '../config/axios';
+import { setToken, clearToken } from '../redux/actions';
 
-import { setEmail, setPassword } from '../redux/actions';
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        paper: {
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        avatar: {
+            margin: theme.spacing(1),
+            backgroundColor: theme.palette.secondary.main,
+        },
+        form: {
+            width: '100%', // Fix IE 11 issue.
+            marginTop: theme.spacing(1),
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2),
+        },
+    }),
+);
 
 interface RootState {
-    signin: {
-        email: string;
-        password: string;
-    };
+    token: string;
 }
 
 const SignIn = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const token = useSelector((state: RootState) => state.token);
+
     const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setEmail(event.target.value));
+        setEmail(event.target.value);
     };
     const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPassword(event.target.value));
+        setPassword(event.target.value);
     };
 
     const login = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/signin', { email, password });
-            const token: string = response.data.token;
+            const response = await apiClient.post('/api/auth/signin', { email, password });
+            const { token, error } = response.data;
+            // dispatch(setToken(token));
         } catch (error) {
             console.error(error);
         }
     };
 
-    const email = useSelector((state: RootState) => state.signin.email);
-    const password = useSelector((state: RootState) => state.signin.password);
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -119,6 +120,7 @@ const SignIn = () => {
                     </Grid>
                 </form>
             </div>
+            <p>token: {token}</p>
         </Container>
     );
 };

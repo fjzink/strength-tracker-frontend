@@ -1,4 +1,13 @@
-import { SET_EMAIL, SET_PASSWORD, SET_FIRSTNAME, SET_LASTNAME } from './actionTypes';
+import { SET_TOKEN, CLEAR_TOKEN, SET_EMAIL, SET_PASSWORD, SET_FIRSTNAME, SET_LASTNAME } from './actionTypes';
+
+export const setToken = (token: string) => ({
+    type: SET_TOKEN,
+    payload: { token },
+});
+
+export const clearToken = () => ({
+    type: CLEAR_TOKEN,
+});
 
 export const setEmail = (email: string) => ({
     type: SET_EMAIL,
