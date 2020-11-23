@@ -11,8 +11,12 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
+
 import { apiClient } from '../config/axios';
-import { setToken, clearToken } from '../redux/actions';
+import { setToken } from '../redux/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,6 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
         submit: {
             margin: theme.spacing(3, 0, 2),
         },
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#fff',
+        },
     }),
 );
 
@@ -43,9 +51,13 @@ interface RootState {
 const SignIn = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = useState('');
+
     const token = useSelector((state: RootState) => state.token);
 
     const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,12 +69,22 @@ const SignIn = () => {
 
     const login = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setError('');
+        setLoading(true);
         try {
             const response = await apiClient.post('/api/auth/signin', { email, password });
             const { token, error } = response.data;
-            // dispatch(setToken(token));
+            if (token && !error) {
+                dispatch(setToken(token));
+                setLoading(false);
+                history.push('/');
+            } else {
+                setError(error);
+                setLoading(false);
+            }
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     };
 
@@ -103,6 +125,13 @@ const SignIn = () => {
                         value={password}
                         onChange={handlePassword}
                     />
+                    {error ? (
+                        <Grid item xs={12}>
+                            <Typography color="error" variant="subtitle1">
+                                Error: {error}
+                            </Typography>
+                        </Grid>
+                    ) : null}
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         Sign In
                     </Button>
@@ -120,7 +149,9 @@ const SignIn = () => {
                     </Grid>
                 </form>
             </div>
-            <p>token: {token}</p>
+            <Backdrop className={classes.backdrop} open={loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Container>
     );
 };

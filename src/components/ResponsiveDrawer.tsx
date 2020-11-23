@@ -18,6 +18,9 @@ import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { clearToken } from '../redux/actions';
 
 const drawerWidth = 240;
 
@@ -86,11 +89,17 @@ function ListItemLink(props: ListItemLinkProps) {
     );
 }
 
+interface RootState {
+    token: string;
+}
+
 export default function ResponsiveDrawer(props: any) {
     const { window } = props;
     const classes = useStyles();
+    const dispatch = useDispatch();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const isSignedIn = useSelector((state: RootState) => !!state.token);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -98,6 +107,9 @@ export default function ResponsiveDrawer(props: any) {
 
     const closeDrawer = () => {
         setMobileOpen(false);
+    };
+    const signOut = () => {
+        dispatch(clearToken());
     };
 
     const navButtons = [
@@ -138,9 +150,15 @@ export default function ResponsiveDrawer(props: any) {
                         Strength Tracker
                     </Typography>
                     <div className={classes.login}>
-                        <Button color="inherit" component={RouterLink} to="/signin">
-                            Sign In
-                        </Button>
+                        {isSignedIn ? (
+                            <Button color="inherit" onClick={signOut}>
+                                Sign Out
+                            </Button>
+                        ) : (
+                            <Button color="inherit" component={RouterLink} to="/signin">
+                                Sign In
+                            </Button>
+                        )}
                     </div>
                 </Toolbar>
             </AppBar>
