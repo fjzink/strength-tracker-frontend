@@ -8,31 +8,31 @@ import { SignIn } from './components/SignIn';
 import { SignUp } from './components/SignUp';
 
 function App() {
-  return (
-    <div className='App'>
-      <Router>
-        <ResponsiveDrawer>
-          <Switch>
-            <Route path='/plans'>
-              <Plans />
-            </Route>
-            <Route path='/exercises'>
-              <Exercises />
-            </Route>
-            <Route path='/signin' >
-              <SignIn />
-            </Route>
-            <Route path='/signup'>
-              <SignUp />
-            </Route>
-            <Route path='/'>
-              <Home />
-            </Route>
-          </Switch>
-        </ResponsiveDrawer>
-      </Router>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <ResponsiveDrawer>
+                    <Switch>
+                        <Route path="/plans">
+                            <Plans />
+                        </Route>
+                        <Route path="/exercises">
+                            <Exercises />
+                        </Route>
+                        <Route path="/signin">
+                            <SignIn />
+                        </Route>
+                        <Route path="/signup">
+                            <SignUp />
+                        </Route>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                    </Switch>
+                </ResponsiveDrawer>
+            </Router>
+        </div>
+    );
 }
 
 export default App;

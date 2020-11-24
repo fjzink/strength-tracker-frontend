@@ -28,34 +28,34 @@ interface LastNamePayload {
     lastName: string;
 }
 
-export default function(state = initialState, action: Action) {
+export default function (state = initialState, action: Action) {
     switch (action.type) {
         case SET_EMAIL: {
             const { email } = action.payload;
             return {
                 ...state,
-                email
+                email,
             };
         }
         case SET_PASSWORD: {
             const { password } = action.payload;
             return {
                 ...state,
-                password
+                password,
             };
         }
         case SET_FIRSTNAME: {
             const { firstName } = action.payload;
             return {
                 ...state,
-                firstName
+                firstName,
             };
         }
         case SET_LASTNAME: {
             const { lastName } = action.payload;
             return {
                 ...state,
-                lastName
+                lastName,
             };
         }
         default:
