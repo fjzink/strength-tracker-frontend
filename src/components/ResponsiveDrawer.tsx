@@ -114,7 +114,7 @@ export default function ResponsiveDrawer(props: any) {
 
     const navButtons = [
         { primary: 'Home', icon: <HomeIcon />, to: '/' },
-        { primary: 'Plans', icon: <DateRangeIcon />, to: '/plans' },
+        { primary: 'Training Plans', icon: <DateRangeIcon />, to: '/plans' },
         { primary: 'Exercises', icon: <FitnessCenterIcon />, to: '/exercises' },
     ];
 
